@@ -34,7 +34,7 @@ dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
 
 
 
-6. Verify if the SPI was setup was successful and the CAN module was initialized.
+6. Verify the SPI configuration. The CAN module should be initialized.
 ~~~
 $ dmesg | grep -i spi
 ~~~
