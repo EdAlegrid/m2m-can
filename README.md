@@ -188,7 +188,6 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
 
   console.log('result', result); // true if successful
 
-  // turn on rpi can_temp led indicator
   led1.on();
   led2.off();
 
