@@ -19,15 +19,17 @@ $ sudo mousepad /boot/config.txt
 
 2. Uncomment the following section to enable spi.
 
-`dtparam=spi=on`
-
+~~~
+  dtparam=spi=on
+~~~
 3. Add the following as additional SPI setup.
-
-  `dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25`
-
+~~~
+dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+~~~
 4. Comment the following section. This is not needed.
-
- `# dtoverlay=spi0-hw-cs`
+~~~
+# dtoverlay=spi0-hw-cs
+~~~
 
 5. Save the config.txt file.
 
