@@ -131,12 +131,12 @@ const temp_id = '025';
 /* random can-bus device frame id */
 const random_id = '035';
 
-/* master can-bus device frame id or can node id */
+/* master can-bus frame id or can node id */
 const device_id = '00C';
 
-/* open can0 interface, set bitrate to 500000 and txqueuelen to 1000 */
-can.open('can0', 500000, 1000, function(err, result){
-  if(err) return console.error('can error', err);
+/* open can0 interface, set bitrate to 500000 */
+can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000, rs = 100
+  if(err) return console.error('can0 interface open error', err.message);
   // You'll see an output - ip link set can0 up with txqueuelen 1000 and bitrate 500000 - success
 
   console.log('can.open result', result); // true if successful
@@ -167,7 +167,87 @@ can.open('can0', 500000, 1000, function(err, result){
 ```
 
 ## Slave1 application
+```js
+'use strict';
+
+const can = require('m2m-can');
+const r = require('array-gpio');
+
+/* using built-in i2c library for capturing temperature data using the MCP9808 chip */
+let i2c =  require('./node_modules/array-gpio/examples/i2c9808.js');
+
+/* setup led status indicator using array-gpio */
+let led = r.out(33, 35, 36, 40);
+
+/* can-bus temperature device id */
+let temp_id = '025';
+
+can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000, rs = 100
+  if(err) return console.error('can0 interface open error', err);
+
+  console.log('result', result); // true if successful
+
+  // turn on rpi can_temp led indicator
+  led[0].on();
+
+  // watch data changes in a cyclic mode
+  // built-in within the watch method
+  can.watch('can0', {id:temp_id}, (err, data) => { // watch interval defaults to 100 ms
+    if(err) return console.error('can watch error', err.message);
+
+    data.payload = i2c.getTemp();
+
+    // if data value has changed, send data to CAN bus
+    if(data.change === true){
+      console.log('send temp data ...', data.payload);
+      led[1].pulse(200);
+      can.send('can0', data.id, data.payload);
+    }
+    else{
+      console.log('*no temp data change...');
+    }
+  });
+});
+
+```
 ## Slave2 application
+```js
+'use strict';
+
+const can = require('m2m-can');
+const r = require('array-gpio');
+
+/* setup can bus device led status indicator using array-gpio*/
+let led1 = r.out(33); // can device status
+let led2 = r.out(35); // data change status
+let led3 = r.out(37); // test change status
+
+// can-bus device random id
+const device_id = '035';
+
+// Initialize can bus by setting the bitrate
+can.open('can0', 500000, function(err, result){
+  if(err) return console.error('can0 interface open error', err.message);
+
+    led1.off();
+	  led2.off();
+    led3.off();
+
+    can.watch('can0', {id:device_id}, (err, data) => {
+       if(err){ return console.error('err', err); }
+
+	     data.payload = 10 + Math.floor(( Math.random() * 200) + 100);
+       if(data.change){
+         console.log('sending random data', data.payload);
+         can.send('can0', device_id, data.payload);
+         led2.pulse(300);
+       }
+       else{
+	       //console.log('no data change');
+       }
+    });
+});
+```
 
 
 <br>
