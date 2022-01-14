@@ -1,41 +1,38 @@
 # m2m-can
 A simple can-bus library based on SocketCAN.
 
-links
-https://github.com/linux-can/can-utils
-
 ## Can-bus setup
 
-1. Open Raspberry Pi config.txt.
+1. Open Raspberry Pi config.txt file using an editor.
 ~~~
-$ sudo leafpad /boot/config.txt
+$ sudo mousepad /boot/config.txt
 ~~~
-    
+
 &ensp;&ensp;or
 
 ~~~
-$ sudo mousepad /boot/config.txt
+$ sudo leafpad /boot/config.txt
 ~~~
 
 2. Uncomment the following section to enable spi.
 
 ~~~
-  dtparam=spi=on
+dtparam=spi=on
 ~~~
+
 3. Add the following as additional SPI setup.
 ~~~
 dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
 ~~~
+
 4. Comment the following section. This is not needed.
 ~~~
 # dtoverlay=spi0-hw-cs
 ~~~
 
-5. Save the config.txt file.
+5. Save the config.txt file. Reboot the Raspberry Pi.
 
-6. Reboot the Raspberry pi.
-
-7. Verify if the SPI was setup was successful and the CAN module was initialized.
+6. Verify if the SPI was setup was successful and the CAN module was initialized.
 ~~~
 $ dmesg | grep -i spi
 ~~~
@@ -63,35 +60,41 @@ $ sudo nano /etc/modules
 &ensp;&ensp;Add "can" in a new line, save the file and reboot.
 
 ### Optional additional setup.
-8. Install can utility
+7. Install can utility
 ~~~
 $ sudo apt-get install can-utils
 ~~~
-9. Set clock speed.
+8. Set clock speed.
 ~~~
 $ sudo ip link set can0 up type can bitrate 500000
 ~~~
-&ensp;&ensp;if the result is
+
+&ensp;&ensp;If the device is busy as shown below:
 ~~~
  $ RTNETLINK answers: Device or resource busy
 ~~~
-&ensp;&ensp;try
+
+&ensp;&ensp;Shutdown the CAN interface as shown below:
 ~~~
 $ sudo ifconfig can0 down
 ~~~
-&ensp;&ensp;then
+
+&ensp;&ensp;And then restart it as shown below:
 ~~~
 $ sudo ifconfig can0 up
 ~~~
-10. Listen for any byte in the bus
+
+9. Listen/Receive for any data in the CAN bus.
 ~~~
 $ candump any
 ~~~
-11. Write some data to the canbus.
+
+10. Send/Write some data to the CAN bus.
 ~~~
 $ cansend can0 111#FF
 ~~~
-12. Below are some examples.
+
+11. Below are some examples.
 
 &ensp;&ensp;Wrong CAN-frame format! Try:
 ~~~
@@ -147,8 +150,9 @@ can.open('can0', 500000, 1000, function(err, result){
     // { id: '035', len: 3, data: [ 50, 0, 52 ], filter: '035', change: true }   
     // fdata[0] - integer value
     // fdata[1] - fractional value    
-    // random = fdata[0] + '.' + fdata[1];
-    random = fdata;
+    random = fdata[0] + '.' + fdata[1];
+    // random = fdata;
+    console.log('random', random);
   });
 
   // can-bus temp_id read frame data 	
@@ -156,11 +160,14 @@ can.open('can0', 500000, 1000, function(err, result){
     if(err) return console.log('read error', err);
 
     console.log('can-temp frame data', fdata);
-	// { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
+	  // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
     // fdata[0] - integer value
     // fdata[1] - fractional value    
-    // temp = fdata[0] + '.' + fdata[1];
-    temp = fdata;
+    temp = fdata[0] + '.' + fdata[1];
+    console.log('temperature', temp); 
   });
 });
 ```
+
+links
+can-utils https://github.com/linux-can/can-utils
