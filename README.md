@@ -62,6 +62,7 @@ $ sudo nano /etc/modules
 &ensp;&ensp;Add "can" in a new line, save the file and reboot.
 
 <br>
+
 ### Optional additional CAN utilities.
 1. Install Linux can utility for SocketCAN (https://github.com/linux-can/can-utils).
 ~~~
