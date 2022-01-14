@@ -11,7 +11,7 @@ https://github.com/linux-can/can-utils
 $ sudo leafpad /boot/config.txt
 ~~~
     
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or
+&ensp;&ensp;or
 
 ~~~
 $ sudo mousepad /boot/config.txt
@@ -37,15 +37,15 @@ $ sudo mousepad /boot/config.txt
 ~~~
 $ dmesg | grep -i spi
 ~~~
-&ensp;&ensp;&ensp;The result will look like as shown below.
+&ensp;&ensp;The result will look like as shown below.
 ~~~
 [    8.544607] mcp251x spi0.0 can0: MCP2515 successfully initialized.
 ~~~
-&ensp;&ensp;&ensp;By the same command you can check the CAN module if it was started by default:
+&ensp;&ensp;By the same command you can check the CAN module if it was started by default:
 ~~~
 $ dmesg | grep -i can
 ~~~
-&ensp;&ensp;&ensp;The result will look like as shown below.
+&ensp;&ensp;The result will look like as shown below.
 ~~~
 [    9.793497] CAN device driver interface
 [    9.819174] mcp251x spi0.0 can0: MCP2515 successfully initialized.
@@ -54,11 +54,11 @@ $ dmesg | grep -i can
 [  271.711043] can: raw protocol
 ~~~
 
-&ensp;&ensp;&ensp;If for any reason this is not the case, you can add CAN module at system start:
+&ensp;&ensp;If for any reason this is not the case, you can add CAN module at system start:
 ~~~
 $ sudo nano /etc/modules
 ~~~
-&ensp;&ensp;&ensp;Add "can" in a new line, save the file and reboot.
+&ensp;&ensp;Add "can" in a new line, save the file and reboot.
 
 ### Optional additional setup.
 8. Install can utility
@@ -69,15 +69,15 @@ $ sudo apt-get install can-utils
 ~~~
 $ sudo ip link set can0 up type can bitrate 500000
 ~~~
-&ensp;&ensp;&ensp;if the result is
+&ensp;&ensp;if the result is
 ~~~
  $ RTNETLINK answers: Device or resource busy
 ~~~
-&ensp;&ensp;&ensp;try
+&ensp;&ensp;try
 ~~~
 $ sudo ifconfig can0 down
 ~~~
-&ensp;&ensp;&ensp;then
+&ensp;&ensp;then
 ~~~
 $ sudo ifconfig can0 up
 ~~~
@@ -91,7 +91,7 @@ $ cansend can0 111#FF
 ~~~
 12. Below are some examples.
 
-&ensp;&ensp;&ensp;Wrong CAN-frame format! Try:
+&ensp;&ensp;Wrong CAN-frame format! Try:
 ~~~
 <can_id>#{R|data}          for CAN 2.0 frames
 <can_id>##<flags>{data}    for CAN FD frames
