@@ -6,43 +6,46 @@ https://github.com/linux-can/can-utils
 
 ## Can-bus setup
 
-1. Access pi config.txt.
+1. Open Raspberry Pi config.txt.
 ~~~
 $ sudo leafpad /boot/config.txt
 ~~~
-or
+    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or
+
 ~~~
 $ sudo mousepad /boot/config.txt
 ~~~
 
-2. Uncomment to enable spi
-dtparam=spi=on
+2. Uncomment the following section to enable spi.
+
+`dtparam=spi=on`
 
 3. Add the following as additional SPI setup.
 
   `dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25`
 
- Comment this section. This is not needed.
+4. Comment the following section. This is not needed.
 
  `# dtoverlay=spi0-hw-cs`
 
+5. Save the config.txt file.
 
-4. Save the config.txt file.
-5. Reboot the Raspberry pi.
+6. Reboot the Raspberry pi.
 
-6. Verify if the SPI was setup was successful and the CAN module was initialized.
+7. Verify if the SPI was setup was successful and the CAN module was initialized.
 ~~~
 $ dmesg | grep -i spi
 ~~~
-The result will look like as shown below.
+&ensp;&ensp;&ensp;The result will look like as shown below.
 ~~~
 [    8.544607] mcp251x spi0.0 can0: MCP2515 successfully initialized.
 ~~~
-By the same command you can check the CAN module if it was started by default:
+&ensp;&ensp;&ensp;By the same command you can check the CAN module if it was started by default:
 ~~~
 $ dmesg | grep -i can
 ~~~
-The result will look like as shown below.
+&ensp;&ensp;&ensp;The result will look like as shown below.
 ~~~
 [    9.793497] CAN device driver interface
 [    9.819174] mcp251x spi0.0 can0: MCP2515 successfully initialized.
@@ -51,44 +54,44 @@ The result will look like as shown below.
 [  271.711043] can: raw protocol
 ~~~
 
-If for any reason this is not the case, you can add CAN module at system start:
+&ensp;&ensp;&ensp;If for any reason this is not the case, you can add CAN module at system start:
 ~~~
 $ sudo nano /etc/modules
 ~~~
-Add "can" in a new line, save the file and reboot.
+&ensp;&ensp;&ensp;Add "can" in a new line, save the file and reboot.
 
 ### Optional additional setup.
-7. Install can utility
+8. Install can utility
 ~~~
 $ sudo apt-get install can-utils
 ~~~
-8. Set clock speed.
+9. Set clock speed.
 ~~~
 $ sudo ip link set can0 up type can bitrate 500000
 ~~~
-if the result is
+&ensp;&ensp;&ensp;if the result is
 ~~~
  $ RTNETLINK answers: Device or resource busy
 ~~~
-try
+&ensp;&ensp;&ensp;try
 ~~~
 $ sudo ifconfig can0 down
 ~~~
-then
+&ensp;&ensp;&ensp;then
 ~~~
 $ sudo ifconfig can0 up
 ~~~
-9. Listen for any byte in the bus
+10. Listen for any byte in the bus
 ~~~
 $ candump any
 ~~~
-10. Write some data to the canbus.
+11. Write some data to the canbus.
 ~~~
 $ cansend can0 111#FF
 ~~~
-11. Below are some examples.
+12. Below are some examples.
 
-Wrong CAN-frame format! Try:
+&ensp;&ensp;&ensp;Wrong CAN-frame format! Try:
 ~~~
 <can_id>#{R|data}          for CAN 2.0 frames
 <can_id>##<flags>{data}    for CAN FD frames
