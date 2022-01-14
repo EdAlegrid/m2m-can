@@ -176,8 +176,9 @@ const r = require('array-gpio');
 /* using built-in i2c library for capturing temperature data using the MCP9808 chip */
 let i2c =  require('./node_modules/array-gpio/examples/i2c9808.js');
 
-/* setup led status indicator using array-gpio */
-let led = r.out(33, 35, 36, 40);
+/* setup can bus device led status indicator using array-gpio*/
+let led1 = r.out(33); // can device status
+let led2 = r.out(35); // data change status
 
 /* can-bus temperature device id */
 let temp_id = '025';
@@ -188,7 +189,8 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
   console.log('result', result); // true if successful
 
   // turn on rpi can_temp led indicator
-  led[0].on();
+  led1.on();
+  led2.off();
 
   // watch data changes in a cyclic mode
   // built-in within the watch method
@@ -200,7 +202,7 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
     // if data value has changed, send data to CAN bus
     if(data.change === true){
       console.log('send temp data ...', data.payload);
-      led[1].pulse(200);
+      led2.pulse(200);
       can.send('can0', data.id, data.payload);
     }
     else{
@@ -220,7 +222,6 @@ const r = require('array-gpio');
 /* setup can bus device led status indicator using array-gpio*/
 let led1 = r.out(33); // can device status
 let led2 = r.out(35); // data change status
-let led3 = r.out(37); // test change status
 
 // can-bus device random id
 const device_id = '035';
@@ -229,14 +230,13 @@ const device_id = '035';
 can.open('can0', 500000, function(err, result){
   if(err) return console.error('can0 interface open error', err.message);
 
-    led1.off();
-	  led2.off();
-    led3.off();
+    led1.on();
+    led2.off();
 
     can.watch('can0', {id:device_id}, (err, data) => {
        if(err){ return console.error('err', err); }
 
-	     data.payload = 10 + Math.floor(( Math.random() * 200) + 100);
+       data.payload = 10 + Math.floor(( Math.random() * 200) + 100);
        if(data.change){
          console.log('sending random data', data.payload);
          can.send('can0', device_id, data.payload);
