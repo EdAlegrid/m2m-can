@@ -61,7 +61,7 @@ $ sudo nano /etc/modules
 ~~~
 &ensp;&ensp;Add "can" in a new line, save the file and reboot.
 
-
+<br>
 ### Optional additional CAN utilities.
 1. Install Linux can utility for SocketCAN (https://github.com/linux-can/can-utils).
 ~~~
@@ -141,7 +141,7 @@ can.open('can0', 500000, 1000, function(err, result){
   console.log('can.open result', result); // true if successful
 
   // read from CAN bus the random frame data
-  can.read('can0', {id:random_id, interval:100}, function(err, fdata){
+  can.read('can0', {id:random_id}, function(err, fdata){
     if(err) return console.log('read error', err);
 
     console.log('can-random frame data', fdata); // { id: '035', len: 3, data: [ 50, 52 ], filter: '035', change: true }   
@@ -153,7 +153,7 @@ can.open('can0', 500000, 1000, function(err, result){
   });
 
   // read from CAN bus the temperatue frame data 	
-  can.read('can0', {id:temp_id, interval:100} , function(err, fdata){
+  can.read('can0', {id:temp_id} , function(err, fdata){
     if(err) return console.log('read error', err);
 
     console.log('can-temp frame data', fdata); // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
