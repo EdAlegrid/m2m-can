@@ -63,8 +63,7 @@ $ sudo nano /etc/modules
 
 
 ### Optional additional CAN utilities.
-1. Install Linux can utility for SocketCAN.
-can-utils https://github.com/linux-can/can-utils
+1. Install Linux can utility for SocketCAN (https://github.com/linux-can/can-utils).
 ~~~
 $ sudo apt-get install can-utils
 ~~~
@@ -154,7 +153,7 @@ can.open('can0', 500000, 1000, function(err, result){
   });
 
   // read from CAN bus the temperatue frame data 	
-  can.read('can0', {id:temp_id, interval:200} , function(err, fdata){
+  can.read('can0', {id:temp_id, interval:100} , function(err, fdata){
     if(err) return console.log('read error', err);
 
     console.log('can-temp frame data', fdata); // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
@@ -165,6 +164,7 @@ can.open('can0', 500000, 1000, function(err, result){
   });
 });
 ```
+<br>
+Links
 
-links
 can-utils https://github.com/linux-can/can-utils
