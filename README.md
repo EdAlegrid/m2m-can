@@ -59,12 +59,14 @@ $ sudo nano /etc/modules
 ~~~
 &ensp;&ensp;Add "can" in a new line, save the file and reboot.
 
-### Optional additional setup.
-7. Install can utility
+### Optional additional CAN utilities.
+7. Install Linux can utility for SocketCAN.
+can-utils https://github.com/linux-can/can-utils
+
 ~~~
 $ sudo apt-get install can-utils
 ~~~
-8. Set clock speed.
+8. Set clock the speed.
 ~~~
 $ sudo ip link set can0 up type can bitrate 500000
 ~~~
@@ -132,10 +134,11 @@ const device_id = '00C';
 /* open can0 interface, set bitrate to 500000 and txqueuelen to 1000 */
 can.open('can0', 500000, 1000, function(err, result){
   if(err) return console.error('can error', err);
-  // outputs ip link set can0 up with txqueuelen 1000 and bitrate 500000 - success
+  // You'll see an output - ip link set can0 up with txqueuelen 1000 and bitrate 500000 - success
 
   console.log('can.open result', result); // true if successful
 
+  // Verify the data
   // 10 00 00 00
   // 10  0 80 19 => 10 00 80 19
 
@@ -146,8 +149,7 @@ can.open('can0', 500000, 1000, function(err, result){
   can.read('can0', {id:random_id, interval:100}, function(err, fdata){
     if(err) return console.log('read error', err);
 
-    console.log('can-random frame data', fdata);
-    // { id: '035', len: 3, data: [ 50, 0, 52 ], filter: '035', change: true }   
+    console.log('can-random frame data', fdata); // { id: '035', len: 3, data: [ 50, 0, 52 ], filter: '035', change: true }   
     // fdata[0] - integer value
     // fdata[1] - fractional value    
     random = fdata[0] + '.' + fdata[1];
@@ -159,12 +161,11 @@ can.open('can0', 500000, 1000, function(err, result){
   can.read('can0', {id:temp_id, interval:200} , function(err, fdata){
     if(err) return console.log('read error', err);
 
-    console.log('can-temp frame data', fdata);
-	  // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
+    console.log('can-temp frame data', fdata); // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
     // fdata[0] - integer value
     // fdata[1] - fractional value    
     temp = fdata[0] + '.' + fdata[1];
-    console.log('temperature', temp); 
+    console.log('temperature', temp);
   });
 });
 ```
