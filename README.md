@@ -140,7 +140,7 @@ can.open('can0', 500000, 1000, function(err, result){
 
   console.log('can.open result', result); // true if successful
 
-  // read from CAN bus the random frame data
+  // read random frame data from CAN bus using the random_id
   can.read('can0', {id:random_id}, function(err, fdata){
     if(err) return console.log('read error', err);
 
@@ -152,7 +152,7 @@ can.open('can0', 500000, 1000, function(err, result){
     console.log('random', random);
   });
 
-  // read from CAN bus the temperatue frame data 	
+  // read temperature frame data from CAN bus using the temp_id
   can.read('can0', {id:temp_id} , function(err, fdata){
     if(err) return console.log('read error', err);
 
