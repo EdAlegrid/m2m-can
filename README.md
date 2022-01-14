@@ -1,9 +1,9 @@
 # m2m-can
 A simple can-bus library based on SocketCAN.
 
-## Can-bus setup
+## Can-bus setup (using MCP2515 CAN module)
 
-1. Open Raspberry Pi config.txt file using an editor.
+1. Open the Raspberry Pi config.txt file using an editor.
 ~~~
 $ sudo mousepad /boot/config.txt
 ~~~
@@ -14,7 +14,7 @@ $ sudo mousepad /boot/config.txt
 $ sudo leafpad /boot/config.txt
 ~~~
 
-2. Uncomment the following section to enable spi.
+2. Uncomment the following section to enable SPI.
 
 ~~~
 dtparam=spi=on
@@ -31,6 +31,8 @@ dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
 ~~~
 
 5. Save the config.txt file. Reboot the Raspberry Pi.
+
+
 
 6. Verify if the SPI was setup was successful and the CAN module was initialized.
 ~~~
@@ -53,20 +55,21 @@ $ dmesg | grep -i can
 [  271.711043] can: raw protocol
 ~~~
 
-&ensp;&ensp;If for any reason this is not the case, you can add CAN module at system start:
+&ensp;&ensp;If for any reason this is not the case, you can add the CAN module at system start:
 ~~~
 $ sudo nano /etc/modules
 ~~~
 &ensp;&ensp;Add "can" in a new line, save the file and reboot.
 
-### Optional additional CAN utilities.
-7. Install Linux can utility for SocketCAN.
-can-utils https://github.com/linux-can/can-utils
 
+### Optional additional CAN utilities.
+1. Install Linux can utility for SocketCAN.
+can-utils https://github.com/linux-can/can-utils
 ~~~
 $ sudo apt-get install can-utils
 ~~~
-8. Set clock the speed.
+
+2. Set clock the speed.
 ~~~
 $ sudo ip link set can0 up type can bitrate 500000
 ~~~
@@ -86,17 +89,17 @@ $ sudo ifconfig can0 down
 $ sudo ifconfig can0 up
 ~~~
 
-9. Listen/Receive for any data in the CAN bus.
+3. Listen/Receive for any data in the CAN bus.
 ~~~
 $ candump any
 ~~~
 
-10. Send/Write some data to the CAN bus.
+4. Send/Write some data to the CAN bus.
 ~~~
 $ cansend can0 111#FF
 ~~~
 
-11. Below are some examples.
+5. Below are some examples.
 
 &ensp;&ensp;Wrong CAN-frame format! Try:
 ~~~
@@ -138,18 +141,11 @@ can.open('can0', 500000, 1000, function(err, result){
 
   console.log('can.open result', result); // true if successful
 
-  // Verify the data
-  // 10 00 00 00
-  // 10  0 80 19 => 10 00 80 19
-
-  // 10 00 00 00
-  // 10  0  8 19 => 10 00 08 19
-
-  // can-bus random_id read frame data
+  // read from CAN bus the random frame data
   can.read('can0', {id:random_id, interval:100}, function(err, fdata){
     if(err) return console.log('read error', err);
 
-    console.log('can-random frame data', fdata); // { id: '035', len: 3, data: [ 50, 0, 52 ], filter: '035', change: true }   
+    console.log('can-random frame data', fdata); // { id: '035', len: 3, data: [ 50, 52 ], filter: '035', change: true }   
     // fdata[0] - integer value
     // fdata[1] - fractional value    
     random = fdata[0] + '.' + fdata[1];
@@ -157,7 +153,7 @@ can.open('can0', 500000, 1000, function(err, result){
     console.log('random', random);
   });
 
-  // can-bus temp_id read frame data 	
+  // read from CAN bus the temperatue frame data 	
   can.read('can0', {id:temp_id, interval:200} , function(err, fdata){
     if(err) return console.log('read error', err);
 
