@@ -5,7 +5,6 @@ A simple can-bus library based on SocketCAN.
 2. [Node.js version requirement](#nodejs-version-requirement)
 3. [Installation](#installation)
 4. [Setup can-bus (using MCP2515 CAN module) on Raspberry Pi](#can-bus-setup)
-<!--## Can-bus setup (using MCP2515 CAN module)-->
 5. [Quick Tour](#quick-tour)
 
 ## Supported Platform
