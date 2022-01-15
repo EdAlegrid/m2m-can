@@ -1,9 +1,35 @@
 # m2m-can
 A simple can-bus library based on SocketCAN.
 
-[Setup can-bus (using MCP2515 CAN module) on Raspberry Pi](#can-bus-setup)
+1. [Supported Platform](#supported-platform)
+2. [Node.js version requirement](#nodejs-version-requirement)
+3. [Installation](#installation)
+4. [Setup can-bus (using MCP2515 CAN module) on Raspberry Pi](#can-bus-setup)
 <!--## Can-bus setup (using MCP2515 CAN module)-->
-## Master application
+5. [Quick Tour](#quick-tour)
+
+## Supported Platform
+
+* Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
+
+## Node.js version requirement
+
+* Node.js versions: 10.x, 11.x, 12.x, 14.x, 16.x. Ideally the latest LTS version.
+
+## Installation
+```js
+$ npm install m2m-can
+```
+
+###  Raspberry Pi peripheral access (GPIO, I2C, SPI and PWM). <a name="rpi-peripheral-access"></a>
+For projects requiring raspberry pi peripheral access such as GPIO, I2C, SPI and PWM, you will need to install *array-gpio* module.
+```js
+$ npm install array-gpio
+```
+
+## Quick Tour
+
+### Master application
 
 ```js
 'use strict';
@@ -53,7 +79,7 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
 });
 ```
 
-## Slave1 application
+### Slave1 application
 ```js
 'use strict';
 
@@ -98,7 +124,7 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
 });
 
 ```
-## Slave2 application
+### Slave2 application
 ```js
 'use strict';
 
