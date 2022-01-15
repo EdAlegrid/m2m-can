@@ -135,6 +135,7 @@ can.open('can0', 500000, function(err, result){
 });
 ```
 <br>
+
 ## Can-bus setup
 
 1. Open the Raspberry Pi config.txt file using an editor.
