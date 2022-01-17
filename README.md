@@ -58,7 +58,7 @@ can.open('can0', 500000, function(err){
 
   // read random frame data from CAN bus using the random_id
   can.read('can0', {id:random_id}, function(err, fdata){
-    if(err) return console.log('read error', err);
+    if(err) return console.log('read error', err.message);
 
     console.log('can-random frame data', fdata);
     // { id: '035', len: 3, data: [ 50, 52 ], filter: '035', change: true }   
@@ -71,7 +71,7 @@ can.open('can0', 500000, function(err){
 
   // read temperature frame data from CAN bus using the temp_id
   can.read('can0', {id:temp_id} , function(err, fdata){
-    if(err) return console.log('read error', err);
+    if(err) return console.log('read error', err.message);
 
     console.log('can-temp frame data', fdata);
     // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
@@ -101,7 +101,7 @@ let led2 = r.out(35); // data change status
 let temp_id = '025';
 
 can.open('can0', 500000, function(err){
-  if(err) return console.error('can0 interface open error', err);
+  if(err) return console.error('can0 interface open error', err.message);
 
   console.log('result', result);
 
@@ -149,7 +149,7 @@ can.open('can0', 500000, function(err){
     led2.off();
 
     can.watch('can0', {id:device_id}, (err, data) => {
-       if(err){ return console.error('err', err); }
+       if(err) return console.error('err', err.message);
 
        data.payload = 10 + Math.floor(( Math.random() * 200) + 100);
        if(data.change){
