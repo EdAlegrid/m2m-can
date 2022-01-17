@@ -51,7 +51,8 @@ const random_id = '035';
 const device_id = '00C';
 
 /* open can0 interface, set bitrate to 500000 */
-can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000, rs = 100
+// defaults to txqueuelen = 1000, rs = 100
+can.open('can0', 500000, function(err, result){
   if(err) return console.error('can0 interface open error', err.message);
   // You'll see an output - ip link set can0 up with txqueuelen 1000 and bitrate 500000 - success
 
@@ -61,7 +62,8 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
   can.read('can0', {id:random_id}, function(err, fdata){
     if(err) return console.log('read error', err);
 
-    console.log('can-random frame data', fdata); // { id: '035', len: 3, data: [ 50, 52 ], filter: '035', change: true }   
+    console.log('can-random frame data', fdata);
+    // { id: '035', len: 3, data: [ 50, 52 ], filter: '035', change: true }   
     // fdata[0] - integer value
     // fdata[1] - fractional value    
     random = fdata[0] + '.' + fdata[1];
@@ -73,7 +75,8 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
   can.read('can0', {id:temp_id} , function(err, fdata){
     if(err) return console.log('read error', err);
 
-    console.log('can-temp frame data', fdata); // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
+    console.log('can-temp frame data', fdata);
+    // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
     // fdata[0] - integer value
     // fdata[1] - fractional value    
     temp = fdata[0] + '.' + fdata[1];
@@ -92,7 +95,7 @@ const r = require('array-gpio');
 /* using built-in i2c library for capturing temperature data using the MCP9808 chip */
 let i2c =  require('./node_modules/array-gpio/examples/i2c9808.js');
 
-/* setup can bus device led status indicator using array-gpio*/
+/* setup can bus device led status indicator using array-gpio */
 let led1 = r.out(33); // can device status
 let led2 = r.out(35); // data change status
 
@@ -102,7 +105,7 @@ let temp_id = '025';
 can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000, rs = 100
   if(err) return console.error('can0 interface open error', err);
 
-  console.log('result', result); // true if successful
+  console.log('result', result);
 
   led1.on();
   led2.off();
@@ -121,7 +124,7 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
       can.send('can0', data.id, data.payload);
     }
     else{
-      console.log('*no temp data change...');
+      console.log('no data change');
     }
   });
 });
@@ -134,14 +137,13 @@ can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000
 const can = require('m2m-can');
 const r = require('array-gpio');
 
-/* setup can bus device led status indicator using array-gpio*/
+/* setup can bus device led status indicator using array-gpio */
 let led1 = r.out(33); // can device status
 let led2 = r.out(35); // data change status
 
 // can-bus device random id
 const device_id = '035';
 
-// Initialize can bus by setting the bitrate
 can.open('can0', 500000, function(err, result){
   if(err) return console.error('can0 interface open error', err.message);
 
@@ -158,7 +160,7 @@ can.open('can0', 500000, function(err, result){
          led2.pulse(300);
        }
        else{
-	       //console.log('no data change');
+         console.log('no data change');
        }
     });
 });
