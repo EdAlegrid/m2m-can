@@ -50,7 +50,7 @@ const random_id = '035';
 /* master can-bus frame id or can node id */
 const device_id = '00C';
 
-/* open can0 interface, set bitrate to 500000 */
+/* open can0 interface, set bitrate to 500000 Hz */
 // defaults to txqueuelen = 1000, rs = 100
 can.open('can0', 500000, function(err){
   if(err) return console.error('can0 interface open error', err.message);
@@ -59,26 +59,23 @@ can.open('can0', 500000, function(err){
   // read random frame data from CAN bus using the random_id
   can.read('can0', {id:random_id}, function(err, fdata){
     if(err) return console.log('read error', err.message);
-
     console.log('can-random frame data', fdata);
     // { id: '035', len: 3, data: [ 50, 52 ], filter: '035', change: true }   
     // fdata[0] - integer value
     // fdata[1] - fractional value    
     random = fdata[0] + '.' + fdata[1];
-    // random = fdata;
-    console.log('random', random);
+    console.log('random data', random);
   });
 
   // read temperature frame data from CAN bus using the temp_id
   can.read('can0', {id:temp_id} , function(err, fdata){
     if(err) return console.log('read error', err.message);
-
     console.log('can-temp frame data', fdata);
     // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
     // fdata[0] - integer value
     // fdata[1] - fractional value    
     temp = fdata[0] + '.' + fdata[1];
-    console.log('temperature', temp);
+    console.log('temperature data', temp);
   });
 });
 ```
