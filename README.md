@@ -174,15 +174,20 @@ can.open('can0', 500000, function(err, result){
 **PIN**&ensp;&ensp;**NAME**&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**PIN**
 
 #**01** &ensp;&ensp; 3.3V &ensp;------------------&ensp; VCC
+
 #**06** &ensp;&ensp; GND &ensp;-----------------&ensp; GND
+
 #**19** &ensp;&ensp; SPI_MOSI &ensp;----------&ensp; SI
+
 #**21** &ensp;&ensp; SPI_MISO &ensp;----------&ensp; SO
+
 #**23** &ensp;&ensp; SPI_SCLK &ensp;----------&ensp; SCK/CLK
+
 #**24** &ensp;&ensp; SPI_CE0 &ensp;------------&ensp; CS
+
 #**32** &ensp;&ensp; GPIO12 &ensp;-------------&ensp; INT
 
-<br>
-<br>
+
 
 1. Open the Raspberry Pi config.txt file using an editor.
 ~~~
