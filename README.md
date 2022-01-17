@@ -147,7 +147,7 @@ can.open('can0', 500000, function(err){
 
     can.watch('can0', {id:device_id}, (err, data) => {
        if(err) return console.error('err', err.message);
-       
+
        data.payload = 1010 + Math.floor(( Math.random() * 200) + 100);
 
        if(data.change){
@@ -181,11 +181,12 @@ can.open('can0', 500000, function(err){
 
 #21&ensp;&ensp; SPI_MISO &ensp;----------&ensp; SO
 
+#22&ensp;&ensp; GPIO25 &ensp;--------------&ensp; INT
+
 #23&ensp;&ensp; SPI_SCLK &ensp;----------&ensp; SCK/CLK
 
 #24&ensp;&ensp; SPI_CE0 &ensp;------------&ensp; CS
 
-#32&ensp;&ensp; GPIO12 &ensp;--------------&ensp; INT
 
 <br>
 
