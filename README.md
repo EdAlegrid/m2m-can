@@ -60,11 +60,11 @@ can.open('can0', 500000, function(err){
   can.read('can0', {id:random_id}, function(err, fdata){
     if(err) return console.log('read error', err.message);
     console.log('can-random frame data', fdata);
-    // { id: '035', len: 3, data: [ 50, 52 ], filter: '035', change: true }   
-    // fdata[0] - integer value
-    // fdata[1] - fractional value    
-    random = fdata[0] + '.' + fdata[1];
-    console.log('random data', random);
+    // { id: '035', len: 3, data: [ 12, 52 ], filter: '035', change: true }   
+    // data[0] - integer value
+    // data[1] - integer value    
+    random = fdata.data[0] + fdata.data[1];
+    console.log('random data', random); // 1252
   });
 
   // read temperature frame data from CAN bus using the temp_id
@@ -72,10 +72,10 @@ can.open('can0', 500000, function(err){
     if(err) return console.log('read error', err.message);
     console.log('can-temp frame data', fdata);
     // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
-    // fdata[0] - integer value
-    // fdata[1] - fractional value    
-    temp = fdata[0] + '.' + fdata[1];
-    console.log('temperature data', temp);
+    // data[0] - integer value
+    // data[1] - fractional value    
+    temp = fdata.data[0] + '.' + fdata.data[1];
+    console.log('temperature data', temp); // 18.94
   });
 });
 ```
@@ -147,8 +147,9 @@ can.open('can0', 500000, function(err){
 
     can.watch('can0', {id:device_id}, (err, data) => {
        if(err) return console.error('err', err.message);
+       
+       data.payload = 1010 + Math.floor(( Math.random() * 200) + 100);
 
-       data.payload = 10 + Math.floor(( Math.random() * 200) + 100);
        if(data.change){
          console.log('sending random data', data.payload);
          can.send('can0', device_id, data.payload);
