@@ -52,11 +52,9 @@ const device_id = '00C';
 
 /* open can0 interface, set bitrate to 500000 */
 // defaults to txqueuelen = 1000, rs = 100
-can.open('can0', 500000, function(err, result){
+can.open('can0', 500000, function(err){
   if(err) return console.error('can0 interface open error', err.message);
-  // You'll see an output - ip link set can0 up with txqueuelen 1000 and bitrate 500000 - success
-
-  console.log('can.open result', result); // true if successful
+  // if can0 was opened successfully, you'll see an output - ip link set can0 up with txqueuelen 1000 and bitrate 500000 - success
 
   // read random frame data from CAN bus using the random_id
   can.read('can0', {id:random_id}, function(err, fdata){
@@ -102,7 +100,7 @@ let led2 = r.out(35); // data change status
 /* can-bus temperature device id */
 let temp_id = '025';
 
-can.open('can0', 500000, function(err, result){ // defaults to txqueuelen = 1000, rs = 100
+can.open('can0', 500000, function(err){
   if(err) return console.error('can0 interface open error', err);
 
   console.log('result', result);
@@ -144,7 +142,7 @@ let led2 = r.out(35); // data change status
 // can-bus device random id
 const device_id = '035';
 
-can.open('can0', 500000, function(err, result){
+can.open('can0', 500000, function(err){
   if(err) return console.error('can0 interface open error', err.message);
 
     led1.on();
