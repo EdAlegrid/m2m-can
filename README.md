@@ -167,6 +167,8 @@ can.open('can0', 500000, function(err, result){
 
 ## Can-bus setup
 
+<br>
+
 ### Pin Connection
 
 **RPI GPIO Header**&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**MCP2515 CAN Module**
@@ -187,7 +189,9 @@ can.open('can0', 500000, function(err, result){
 
 #**32** &ensp;&ensp; GPIO12 &ensp;-------------&ensp; INT
 
+<br>
 
+<br>
 
 1. Open the Raspberry Pi config.txt file using an editor.
 ~~~
