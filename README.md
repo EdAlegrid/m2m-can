@@ -90,12 +90,12 @@ can.open('can0', 500000, function(err){
 const can = require('m2m-can');
 const r = require('array-gpio');
 
-/* using built-in i2c library for capturing temperature data using the MCP9808 chip */
+/* using the built-in MCP9808 chip library for capturing temperature data using i2c */
 let i2c =  require('./node_modules/array-gpio/examples/i2c9808.js');
 
-/* setup can bus device led status indicator using array-gpio */
-let led1 = r.out(33); // can device status
-let led2 = r.out(35); // data change status
+/* setup gpio output pins for led status indicator using array-gpio */
+let led1 = r.out(33); // set gpio output pin 33 for can device status led
+let led2 = r.out(35); // set gpio output pin 35 for data change status led
 
 /* can-bus temperature device id */
 let temp_id = '025';
@@ -175,19 +175,19 @@ can.open('can0', 500000, function(err){
 
 **PIN**&ensp;&ensp;**NAME**&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**PIN**
 
-#**01** &ensp;&ensp; 3.3V &ensp;------------------&ensp; VCC
+#01&ensp;&ensp; 3.3V &ensp;------------------&ensp; VCC
 
-#**06** &ensp;&ensp; GND &ensp;-----------------&ensp; GND
+#06&ensp;&ensp; GND &ensp;-----------------&ensp; GND
 
-#**19** &ensp;&ensp; SPI_MOSI &ensp;----------&ensp; SI
+#19&ensp;&ensp; SPI_MOSI &ensp;----------&ensp; SI
 
-#**21** &ensp;&ensp; SPI_MISO &ensp;----------&ensp; SO
+#21&ensp;&ensp; SPI_MISO &ensp;----------&ensp; SO
 
-#**23** &ensp;&ensp; SPI_SCLK &ensp;----------&ensp; SCK/CLK
+#23&ensp;&ensp; SPI_SCLK &ensp;----------&ensp; SCK/CLK
 
-#**24** &ensp;&ensp; SPI_CE0 &ensp;------------&ensp; CS
+#24&ensp;&ensp; SPI_CE0 &ensp;------------&ensp; CS
 
-#**32** &ensp;&ensp; GPIO12 &ensp;--------------&ensp; INT
+#32&ensp;&ensp; GPIO12 &ensp;--------------&ensp; INT
 
 <br>
 
