@@ -169,9 +169,8 @@ can.open('can0', 500000, function(err, result){
 
 ### Pin Connection
 
-**RPI GPIO Header**   &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;  **MCP2515 CAN Module**
-
-**PIN**&ensp;&ensp;  **NAME** &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**PIN**
+**RPI GPIO Header**&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**MCP2515 CAN Module**
+**PIN**&ensp;&ensp;**NAME** &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**PIN**
 #**01** &ensp;&ensp; 3.3V &ensp;------------------&ensp; VCC
 #**06** &ensp;&ensp; GND &ensp;-----------------&ensp; GND
 #**19** &ensp;&ensp; SPI_MOSI &ensp;----------&ensp; SI
