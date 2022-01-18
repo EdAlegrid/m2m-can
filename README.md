@@ -1,10 +1,11 @@
 # m2m-can
-A simple can-bus library based on SocketCAN. The API is simple and easy. For each device, first you need to open the can interface and connect to the can-bus. Once connected, your device can start sending or receiving data from the can-bus.    
+**m2m-can** is a basic can-bus library based on SocketCAN using a simple and easy API. Open and connect the can interface to the can-bus. Once connected, your device can start sending or receiving data to/from the can-bus.    
 
-1. [Supported Platform](#supported-platform)
+1. [Supported devices](#supported-platform)
 2. [Node.js version requirement](#nodejs-version-requirement)
-3. [Installation](#installation)
-4. [Setup can-bus (using MCP2515 CAN module) on Raspberry Pi](#can-bus-setup)
+<!--3. [Setup can-bus (using MCP2515 CAN module) on Raspberry Pi](#can-bus-setup)-->
+3. [Setup Raspberry Pi to use can-bus (using MCP2515 CAN module)](#can-bus-setup)
+4. [Installation](#installation)
 5. [Quick Tour](#quick-tour)
 
 ## Supported Platform
@@ -28,8 +29,7 @@ $ npm install array-gpio
 
 ## Quick Tour
 
-<!--![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
-[](quicktour.svg)-->
+<!--![](https://raw.githubusercontent.com/EdoLabs/src2/master/m2m-can-image.svg?sanitize=true)-->
 ![](m2m-can-image.svg)
 
 On can-bus communication, each device should either be sending or receiving data to/from other devices on the network but not both.
@@ -50,7 +50,7 @@ const temp_id = '025';
 const random_id = '035';
 
 /* master can-bus frame id or can node id */
-const device_id = '00C';
+const master_id = '00C';
 
 /* open can0 interface, set bitrate to 500000 Hz */
 // defaults to txqueuelen = 1000, rs = 100
@@ -60,18 +60,18 @@ can.open('can0', 500000, function(err){
 
   // read random frame data from CAN bus using the random_id
   can.read('can0', {id:random_id}, function(err, fdata){
-    if(err) return console.log('read error', err.message);
+    if(err) return console.log('can read error', err.message);
     console.log('can-random frame data', fdata);
     // { id: '035', len: 3, data: [ 12, 52 ], filter: '035', change: true }   
     // data[0] - integer value
     // data[1] - integer value    
-    random = fdata.data[0] + fdata.data[1];
+    random = fdata.data[0].toString() + fdata.data[1].toString();
     console.log('random data', random); // 1252
   });
 
   // read temperature frame data from CAN bus using the temp_id
   can.read('can0', {id:temp_id} , function(err, fdata){
-    if(err) return console.log('read error', err.message);
+    if(err) return console.log('can read error', err.message);
     console.log('can-temp frame data', fdata);
     // { id: '025', len: 2, data: [ 18, 94 ], filter: '025', change: true }
     // data[0] - integer value
@@ -97,12 +97,10 @@ let led1 = r.out(33); // set gpio output pin 33 for can device status led
 let led2 = r.out(35); // set gpio output pin 35 for data change status led
 
 /* can-bus temperature device id */
-let temp_id = '025';
+const temp_id = '025';
 
 can.open('can0', 500000, function(err){
   if(err) return console.error('can0 interface open error', err.message);
-
-  console.log('result', result);
 
   led1.on();
   led2.off();
@@ -116,7 +114,7 @@ can.open('can0', 500000, function(err){
 
     // if data value has changed, send data to CAN bus
     if(data.change === true){
-      console.log('send temp data ...', data.payload);
+      console.log('send temp data', data.payload);
       led2.pulse(200);
       can.send('can0', data.id, data.payload);
     }
@@ -139,7 +137,7 @@ let led1 = r.out(33); // can device status
 let led2 = r.out(35); // data change status
 
 // can-bus device random id
-const device_id = '035';
+const random_id = '035';
 
 can.open('can0', 500000, function(err){
   if(err) return console.error('can0 interface open error', err.message);
@@ -147,15 +145,15 @@ can.open('can0', 500000, function(err){
     led1.on();
     led2.off();
 
-    can.watch('can0', {id:device_id}, (err, data) => {
-       if(err) return console.error('err', err.message);
+    can.watch('can0', {id:random_id}, (err, data) => {
+       if(err) return console.error('can watch error', err.message);
 
        data.payload = 1010 + Math.floor(( Math.random() * 200) + 100);
 
        if(data.change){
-         console.log('sending random data', data.payload);
-         can.send('can0', device_id, data.payload);
-         led2.pulse(300);
+         console.log('send random data', data.payload);
+         can.send('can0', random_id, data.payload);
+         led2.pulse(200);
        }
        else{
          console.log('no data change');
@@ -183,11 +181,11 @@ can.open('can0', 500000, function(err){
 
 #21&ensp;&ensp; SPI_MISO &ensp;----------&ensp; SO
 
-#22&ensp;&ensp; GPIO25 &ensp;--------------&ensp; INT
+#22&ensp;&ensp; GPIO25 &ensp;-------------&ensp; INT
 
-#23&ensp;&ensp; SPI_SCLK &ensp;----------&ensp; SCK/CLK
+#23&ensp;&ensp; SPI_SCLK &ensp;---------&ensp; SCK/CLK
 
-#24&ensp;&ensp; SPI_CE0 &ensp;------------&ensp; CS
+#24&ensp;&ensp; SPI_CE0 &ensp;-----------&ensp; CS
 
 
 <br>
