@@ -8,7 +8,7 @@
 4. [Installation](#installation)
 5. [Quick Tour](#quick-tour)
 
-## Supported Platform
+## Supported devices
 
 * Raspberry Pi Models: B+, 2, 3, Zero & Zero W, Compute Module 3, 3B+, 3A+, 4B (generally all 40-pin models)
 
