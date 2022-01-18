@@ -1,7 +1,7 @@
 # m2m-can
 **m2m-can** is a basic can-bus library based on SocketCAN using a simple and easy API. Open and connect the can interface to the can-bus. Once connected, your device can start sending or receiving data to/from the can-bus.    
 
-1. [Supported devices](#supported-platform)
+1. [Supported devices](#supported-devices)
 2. [Node.js version requirement](#nodejs-version-requirement)
 <!--3. [Setup can-bus (using MCP2515 CAN module) on Raspberry Pi](#can-bus-setup)-->
 3. [Setup Raspberry Pi to use can-bus (using MCP2515 CAN module)](#can-bus-setup)
