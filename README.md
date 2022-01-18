@@ -1,5 +1,5 @@
 # m2m-can
-A simple can-bus library based on SocketCAN.
+A simple can-bus library based on SocketCAN. The API is simple and easy. For each device, first you need to open the can interface and connect to the can-bus. Once connected, your device can start sending or receiving data from the can-bus.    
 
 1. [Supported Platform](#supported-platform)
 2. [Node.js version requirement](#nodejs-version-requirement)
@@ -31,6 +31,8 @@ $ npm install array-gpio
 <!--![](https://raw.githubusercontent.com/EdoLabs/src2/master/quicktour.svg?sanitize=true)
 [](quicktour.svg)-->
 ![](m2m-can-image.svg)
+
+On can-bus communication, each device should either be sending or receiving data to/from other devices on the network but not both.
 
 ### Master application
 

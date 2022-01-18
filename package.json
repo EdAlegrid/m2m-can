@@ -1,0 +1,65 @@
+{
+  "name": "m2m-can",
+  "description": "A simple can-bus communication system based on socketCAN.",
+  "license": "MIT",
+  "version": "1.0.5",
+  "public": true,
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "dependencies": {
+    "nan": "^2.15.0",
+    "bindings": "^1.5.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "sinon": "^9.0.3"
+  },
+  "main": "index.js",
+  "scripts": {
+    "configure":"node-gyp configure",
+    "build":"node-gyp build",
+    "install": "node-gyp rebuild",
+    "test": "nyc mocha test/*.test.js"
+  },
+  "gypfile": true,
+  "author": {
+    "name": "Ed Alegrid",
+    "email": "ealegrid@gmail.com"
+  },
+  "os": [
+    "linux"
+  ],
+  "keywords": [
+    "bcm2835",
+    "gpio",
+    "pi",
+    "iot",
+    "rpi",
+    "raspberry",
+    "raspberry pi",
+    "rpi",
+    "rpio",
+    "onoff",
+    "pwm",
+    "i2c",
+    "spi",
+    "m2m",
+    "aws",
+    "faas",
+    "telematics",
+    "industry 4.0",
+    "telemetry",
+    "SCADA",
+    "remote",
+    "automation",  
+    "remote control",
+    "node-m2m",
+    "microservices",
+    "distributed-systems",
+    "pub-sub",
+    "machine-to-machine",
+    "industrial control system"
+  ]
+}
