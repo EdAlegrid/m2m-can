@@ -1,4 +1,8 @@
 # m2m-can
+
+[![Version npm](https://img.shields.io/npm/v/m2m-can.svg?logo=npm)](https://www.npmjs.com/package/m2m-can)
+![Custom badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fwww.node-m2m.com%2Fm2m%2Fbuild-badge%2F2021)
+
 **m2m-can** is a basic can-bus library based on SocketCAN using a simple and easy API. Open and connect the can interface to the can-bus. Once connected, your device can start sending or receiving data to/from the can-bus.    
 
 1. [Supported devices](#supported-devices)
