@@ -29,8 +29,8 @@ $ npm install array-gpio
 
 ## Quick Tour
 
-<!--![](https://raw.githubusercontent.com/EdoLabs/src2/master/m2m-can-image.svg?sanitize=true)-->
-![](m2m-can-image.svg)
+![](https://raw.githubusercontent.com/EdoLabs/src2/master/m2m-can-image.svg?sanitize=true)
+<!--![](m2m-can-image.svg)-->
 
 On can-bus communication, each device should either be sending or receiving data to/from other devices on the network but not both.
 
