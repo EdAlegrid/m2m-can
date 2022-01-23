@@ -62,6 +62,12 @@ can.open('can0', 500000, function(err){
   if(err) return console.error('can0 interface open error', err.message);
   // if can0 was opened successfully, you'll see an output - ip link set can0 up with txqueuelen 1000 and bitrate 500000 - success
 
+  // read all frame data from CAN bus from all frame id's sending data to CAN bus
+  can.read('can0', function(err, fdata){
+    if(err) return console.log('can read error', err.message);
+    console.log('read all frame data', fdata);
+  });
+
   // read random frame data from CAN bus using the random_id
   can.read('can0', {id:random_id}, function(err, fdata){
     if(err) return console.log('can read error', err.message);
@@ -109,18 +115,18 @@ can.open('can0', 500000, function(err){
   led1.on();
   led2.off();
 
-  // watch data changes in a cyclic mode
-  // built-in within the watch method
+  // watch for changes in your data
   can.watch('can0', {id:temp_id}, (err, data) => { // watch interval defaults to 100 ms
     if(err) return console.error('can watch error', err.message);
 
+    // set payload property to your data source
     data.payload = i2c.getTemp();
 
     // if data value has changed, send data to CAN bus
     if(data.change === true){
       console.log('send temp data', data.payload);
       led2.pulse(200);
-      can.send('can0', data.id, data.payload);
+      can.send('can0', temp_id, data.payload);
     }
     else{
       console.log('no data change');
