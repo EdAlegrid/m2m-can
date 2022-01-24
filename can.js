@@ -397,8 +397,11 @@ var watch = exports.watch = function(){
   if(options.intSend){
     intSend = options.intSend;
   }
-  
 
+  if(options.internal){
+    intSend = options.internal;
+  }
+  
   if(typeof arguments[args_len - 1] === 'function'){
     cb = arguments[args_len - 1];
   }
@@ -407,12 +410,12 @@ var watch = exports.watch = function(){
     throw new Error('invalid can can_interface argument');
   }
   if(args_len > 2 && id && !Array.isArray(id) && typeof id !== 'string'){
-    throw new Error('invalid can id argument');
+    //throw new Error('invalid can id argument');
   }
   if(args_len > 2 && id && Array.isArray(id) && typeof id[0] !== 'string'){
     for (let x = 0; x < id.length; x++) {
       if(typeof id[x] !== 'string'){
-        throw new Error('invalid can id argument');
+        //throw new Error('invalid can id argument');
       }
     }
   }
@@ -438,7 +441,7 @@ var watch = exports.watch = function(){
   }  
 
   if(!interval||typeof interval === 'function'){
-    interval = 100; // default send interval in ms
+    interval = 100; // default watch interval in ms
   }
 
   if(!cb){
@@ -453,8 +456,8 @@ var watch = exports.watch = function(){
 
   watchSend.push({id:id, watch_timeout:watch_timeout});
 
-  // initialize to send immediately on the first cycle
-  value = 1;
+  // initialize value for internal send, send immediately on the first iteration
+  value = 10;
   
   watch_process = function(){
     if(data.payload){
