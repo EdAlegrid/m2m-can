@@ -7,7 +7,6 @@
 
 1. [Supported devices](#supported-devices)
 2. [Node.js version requirement](#nodejs-version-requirement)
-<!--3. [Setup can-bus (using MCP2515 CAN module) on Raspberry Pi](#can-bus-setup)-->
 3. [Setup Raspberry Pi to use can-bus (using MCP2515 CAN module)](#can-bus-setup)
 4. [Installation](#installation)
 5. [Quick Tour](#quick-tour)
@@ -68,7 +67,7 @@ can.open('can0', 500000, function(err){
     console.log('read all frame data', fdata);
   });
 
-  // read random frame data from CAN bus using the random_id
+  // read only random frame data from CAN bus using the random_id
   can.read('can0', {id:random_id}, function(err, fdata){
     if(err) return console.log('can read error', err.message);
     console.log('can-random frame data', fdata);
@@ -79,7 +78,7 @@ can.open('can0', 500000, function(err){
     console.log('random data', random); // 1252
   });
 
-  // read temperature frame data from CAN bus using the temp_id
+  // read only temperature frame data from CAN bus using the temp_id
   can.read('can0', {id:temp_id} , function(err, fdata){
     if(err) return console.log('can read error', err.message);
     console.log('can-temp frame data', fdata);
@@ -122,7 +121,7 @@ can.open('can0', 500000, function(err){
     // set payload property to your data source
     data.payload = i2c.getTemp();
 
-    // if data value has changed, send data to CAN bus
+    // if temp data value has changed, send data to CAN bus from temp_id
     if(data.change === true){
       console.log('send temp data', data.payload);
       led2.pulse(200);
@@ -160,6 +159,8 @@ can.open('can0', 500000, function(err){
 
        data.payload = 1010 + Math.floor(( Math.random() * 200) + 100);
 
+       // if random value has changed, send data to CAN bus from random_id
+       // since a new value will be generated everytime, it will always send data to CAN bus   
        if(data.change){
          console.log('send random data', data.payload);
          can.send('can0', random_id, data.payload);
