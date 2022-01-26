@@ -180,9 +180,11 @@ can.open('can0', 500000, function(err){
 
 ### Pin Connection
 
+<br>
+
 **RPI GPIO Header**&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**MCP2515 CAN Module**
 
-**PIN**&ensp;&ensp;**NAME**&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**PIN**
+**PIN**&ensp;&ensp;**NAME**&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;**PIN**
 
 #01&ensp;&ensp; 3.3V &ensp;------------------&ensp; VCC
 
@@ -194,9 +196,9 @@ can.open('can0', 500000, function(err){
 
 #22&ensp;&ensp; GPIO25 &ensp;-------------&ensp; INT
 
-#23&ensp;&ensp; SPI_SCLK &ensp;---------&ensp; SCK/CLK
+#23&ensp;&ensp; SPI_SCLK &ensp;----------&ensp; SCK/CLK
 
-#24&ensp;&ensp; SPI_CE0 &ensp;-----------&ensp; CS
+#24&ensp;&ensp; SPI_CE0 &ensp;------------&ensp; CS
 
 
 <br>
@@ -268,14 +270,14 @@ $ sudo nano /etc/modules
 $ sudo apt-get install can-utils
 ~~~
 
-2. Set clock the speed.
+2. Set the clock speed.
 ~~~
 $ sudo ip link set can0 up type can bitrate 500000
 ~~~
 
 &ensp;&ensp;If the device is busy as shown below:
 ~~~
- $ RTNETLINK answers: Device or resource busy
+$ RTNETLINK answers: Device or resource busy
 ~~~
 
 &ensp;&ensp;Shutdown the CAN interface as shown below:
@@ -288,12 +290,12 @@ $ sudo ifconfig can0 down
 $ sudo ifconfig can0 up
 ~~~
 
-3. Listen/Receive for any data in the CAN bus.
+3. Listen for any data in the CAN bus.
 ~~~
 $ candump any
 ~~~
 
-4. Send/Write some data to the CAN bus.
+4. Send some data to the CAN bus.
 ~~~
 $ cansend can0 111#FF
 ~~~
